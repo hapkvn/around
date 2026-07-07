@@ -1042,10 +1042,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   speed: 5
-  turnSpeed: 3
+  turnSpeed: 30
   frontLeftWheel: {fileID: 6945619733324827926}
   frontRightWheel: {fileID: 50596595559434280}
-  maxCarYaw: 15
+  maxCarYaw: 30
   bodyRotationSpeed: 10
 --- !u!4 &50596595559434280
 Transform:

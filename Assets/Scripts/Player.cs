@@ -11,9 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform frontLeftWheel;  
     [SerializeField] private Transform frontRightWheel;
 
-    [Header("Cài đặt Thân xe")]
-    [SerializeField] private float maxCarYaw = 15f;
-    [SerializeField] private float bodyRotationSpeed = 10f;
+
 
 
     private Rigidbody rb;
@@ -35,15 +33,18 @@ public class Player : MonoBehaviour
     {
         Movement();
         Turn();
-        RotateCar();
     }
     private void Movement()
     {
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
         
-        transform.Translate(Vector3.forward * speed * verticalInput * Time.fixedDeltaTime);
-        transform.Translate(Vector3.right * horizontalInput * turnSpeed * Time.fixedDeltaTime);
+        transform.Translate(Vector3.forward * speed * verticalInput * Time.fixedDeltaTime, Space.Self);
+
+        float rotateAmount = horizontalInput* turnSpeed * Time.fixedDeltaTime;
+        transform.Rotate(0, rotateAmount, 0);
+
+       
 
     }
 
@@ -65,14 +66,5 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void RotateCar()
-    {
-        float inputHorizantal = Input.GetAxis("Horizontal");
-
-        float targetYaw = inputHorizantal * maxCarYaw;
-
-        Quaternion targetRotation = Quaternion.Euler(0, targetYaw, 0);
-
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, bodyRotationSpeed * Time.fixedDeltaTime);
-    }
+   
 }
