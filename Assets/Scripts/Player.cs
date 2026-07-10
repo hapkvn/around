@@ -12,8 +12,6 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform frontRightWheel;
 
 
-
-
     private Rigidbody rb;
     private float horizontalInput;
     private float verticalInput;
