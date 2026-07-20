@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -14,6 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform frontRightWheel;
     [SerializeField] private Transform rearLeftWheel;
     [SerializeField] private Transform rearRightWheel;
+    [SerializeField] private GameObject trail;
 
     [Header("Cài đặt mặt đất")]
     [SerializeField] private LayerMask groundLayer;
@@ -40,11 +42,10 @@ public class Player : MonoBehaviour
         CheckAllWheelsGrounded();
 
         // Chỉ cho phép xe chạy và bẻ lái khi có ít nhất 1 bánh (hoặc cả 4 bánh) chạm đất
-        if (isCarGrounded)
-        {
+       
             Movement();
             Turn();
-        }
+        
     }
 
     private void GetInput()
@@ -73,6 +74,14 @@ public class Player : MonoBehaviour
     {
         float targetSteerAngle = turnDirection * maxSteerAngle;
         Quaternion targetWheelRotation = Quaternion.Euler(0, targetSteerAngle, 0);
+        if ( Math.Abs(turnDirection) >= 0.15)
+        {
+            trail.SetActive(true);
+        }
+        else
+        {
+            trail.SetActive(false);
+        }
 
         if (frontLeftWheel != null)
         {
