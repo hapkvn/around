@@ -2,7 +2,7 @@
 
 public class obstacle : MonoBehaviour
 {
-    
+    [SerializeField] private float speed = 5f; // Tốc độ di chuyển của vật cản
     void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("player");
@@ -11,7 +11,7 @@ public class obstacle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.Translate(Vector3.back * speed * Time.deltaTime);
     }
     private void OnTriggerEnter(Collider other)
     {

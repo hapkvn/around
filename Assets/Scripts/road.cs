@@ -2,6 +2,7 @@
 
 public class RoadManager : MonoBehaviour
 {
+    public static RoadManager instance { get; private set; }
     // Kéo thả các Prefab đường vào đây trong Inspector
     [SerializeField] private GameObject[] roads;
     [SerializeField] private GameObject[] buildRoadPrefab;
@@ -13,6 +14,18 @@ public class RoadManager : MonoBehaviour
     [SerializeField] private float roadLength = 40f;
     [SerializeField] private float build = 10f;
     [SerializeField] private float triggerOffset = 15f;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
@@ -44,6 +57,7 @@ public class RoadManager : MonoBehaviour
         UpdateRoad();
         UpdateBuildRoadRight();
         UpdateBuildRoadLeft();
+       
     }
 
     void UpdateRoad()
