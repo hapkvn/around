@@ -1454,7 +1454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28a0fc09bc8350746af2fecf09858678, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  speed: 100
+  speed: 50
   turnSpeed: 100
   frontLeftWheel: {fileID: 6945619733324827926}
   frontRightWheel: {fileID: 50596595559434280}

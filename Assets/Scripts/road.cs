@@ -109,5 +109,9 @@ public class RoadManager : MonoBehaviour
             RightRoad[RightRoad.Length - 1] = oldestLeftRoad;
         }
     }
+    public float spawn()
+    {
+        return roads[7].transform.position.z;
+    }
 
 }
