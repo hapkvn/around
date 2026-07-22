@@ -197,6 +197,7 @@ MonoBehaviour:
   enemyPrefabs:
   - {fileID: 5626048288324709328, guid: 22ccb410c7b72e64d8c99398295bbd77, type: 3}
   - {fileID: 4469732180089876815, guid: 10419bc4c557b6d4db1d6b654fa3e05d, type: 3}
+  spawnInterval: 2
 --- !u!4 &58079115
 Transform:
   m_ObjectHideFlags: 0
@@ -1236,6 +1237,17 @@ MonoBehaviour:
   - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
   - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
   - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
+  roads_2:
+  - {fileID: 4424652958786657037, guid: 812351b78573f044fbe2148c9de4298e, type: 3}
+  - {fileID: 4424652958786657037, guid: 812351b78573f044fbe2148c9de4298e, type: 3}
+  - {fileID: 4424652958786657037, guid: 812351b78573f044fbe2148c9de4298e, type: 3}
+  - {fileID: 4424652958786657037, guid: 812351b78573f044fbe2148c9de4298e, type: 3}
+  - {fileID: 4424652958786657037, guid: 812351b78573f044fbe2148c9de4298e, type: 3}
+  - {fileID: 4424652958786657037, guid: 812351b78573f044fbe2148c9de4298e, type: 3}
+  - {fileID: 4424652958786657037, guid: 812351b78573f044fbe2148c9de4298e, type: 3}
+  - {fileID: 4424652958786657037, guid: 812351b78573f044fbe2148c9de4298e, type: 3}
+  - {fileID: 4424652958786657037, guid: 812351b78573f044fbe2148c9de4298e, type: 3}
+  - {fileID: 4424652958786657037, guid: 812351b78573f044fbe2148c9de4298e, type: 3}
   buildRoadPrefab:
   - {fileID: 694827606496402045, guid: c4be8b1266280c447987e7eca2e438f7, type: 3}
   - {fileID: 9092438686313137434, guid: 66d6a2f902eccf34382bfd9f756bd4cc, type: 3}

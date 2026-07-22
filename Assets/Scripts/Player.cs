@@ -26,7 +26,18 @@ public class Player : MonoBehaviour
     private float maxSteerAngle = 30f;    
     private float maxX = 20f;
 
-    
+    public static Player instance { get; private set; }
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+       
+    }
+
+
     private float turnDirection = 0f;
 
     void Start()

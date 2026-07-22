@@ -5,6 +5,7 @@ public class RoadManager : MonoBehaviour
     public static RoadManager instance { get; private set; }
     // Kéo thả các Prefab đường vào đây trong Inspector
     [SerializeField] private GameObject[] roads;
+    [SerializeField] private GameObject[] roads_2;
     [SerializeField] private GameObject[] buildRoadPrefab;
     private GameObject[] LeftRoad;
     private GameObject[] RightRoad;
@@ -57,7 +58,8 @@ public class RoadManager : MonoBehaviour
         UpdateRoad();
         UpdateBuildRoadRight();
         UpdateBuildRoadLeft();
-       
+
+
     }
 
     void UpdateRoad()
@@ -68,44 +70,48 @@ public class RoadManager : MonoBehaviour
             GameObject oldestRoad = roads[0];
             GameObject newestRoad = roads[roads.Length - 1];
 
-            // Tính toán vị trí mới
             Vector3 newPosition = newestRoad.transform.position;
             newPosition.z += roadLength;
-            oldestRoad.transform.position = newPosition;
-
-            // Dịch chuyển các phần tử trong mảng lên 1 bậc
+           
             for (int i = 0; i < roads.Length - 1; i++)
             {
                 roads[i] = roads[i + 1];
             }
 
-            // Đưa đoạn đường vừa di chuyển xuống cuối mảng
-            roads[roads.Length - 1] = oldestRoad;
+            if(player.transform.position.z > 1000f)
+            {
+                Destroy(oldestRoad);
+
+                roads[9] = Instantiate(roads_2[9], newPosition, Quaternion.identity, transform);    
+            }
+            else
+            {
+
+                oldestRoad.transform.position = newPosition;
+                roads[roads.Length - 1] = oldestRoad;
+            }
+
+
         }
     }
     void UpdateBuildRoadLeft()
     {
-        // Kiểm tra xem LeftRoad[1] đã tồn tại và player có đi qua chưa
         if (LeftRoad[1] != null && player.transform.position.z > LeftRoad[1].transform.position.z + triggerOffset)
         {
             GameObject oldestLeftRoad = LeftRoad[0];
             GameObject newestLeftRoad = LeftRoad[LeftRoad.Length - 1];
-            // Tính toán vị trí mới
             Vector3 newPosition = newestLeftRoad.transform.position;
             newPosition.z += build;
             oldestLeftRoad.transform.position = newPosition;
-            // Dịch chuyển các phần tử trong mảng lên 1 bậc
             for (int i = 0; i < LeftRoad.Length - 1; i++)
             {
                 LeftRoad[i] = LeftRoad[i + 1];
             }
-            // Đưa đoạn đường vừa di chuyển xuống cuối mảng
             LeftRoad[LeftRoad.Length - 1] = oldestLeftRoad;
         }
     }
     void UpdateBuildRoadRight()
     {
-        // Kiểm tra xem LeftRoad[1] đã tồn tại và player có đi qua chưa
         if (RightRoad[1] != null && player.transform.position.z > RightRoad[1].transform.position.z + triggerOffset)
         {
             GameObject oldestLeftRoad = RightRoad[0];
@@ -114,12 +120,10 @@ public class RoadManager : MonoBehaviour
             Vector3 newPosition = newestLeftRoad.transform.position;
             newPosition.z += build;
             oldestLeftRoad.transform.position = newPosition;
-            // Dịch chuyển các phần tử trong mảng lên 1 bậc
             for (int i = 0; i < RightRoad.Length - 1; i++)
             {
                 RightRoad[i] = RightRoad[i + 1];
             }
-            // Đưa đoạn đường vừa di chuyển xuống cuối mảng
             RightRoad[RightRoad.Length - 1] = oldestLeftRoad;
         }
     }
