@@ -7,6 +7,7 @@ public class RoadManager : MonoBehaviour
     [SerializeField] private GameObject[] roads;
     [SerializeField] private GameObject[] roads_2;
     [SerializeField] private GameObject[] buildRoadPrefab;
+    [SerializeField] private GameObject[] buildRoadPrefab_v2;
     private GameObject[] LeftRoad;
     private GameObject[] RightRoad;
     [SerializeField] private GameObject player;
@@ -82,7 +83,8 @@ public class RoadManager : MonoBehaviour
             {
                 Destroy(oldestRoad);
 
-                roads[9] = Instantiate(roads_2[9], newPosition, Quaternion.identity, transform);    
+                roads[9] = Instantiate(roads_2[9], newPosition, Quaternion.identity, transform);
+               
             }
             else
             {
@@ -102,12 +104,23 @@ public class RoadManager : MonoBehaviour
             GameObject newestLeftRoad = LeftRoad[LeftRoad.Length - 1];
             Vector3 newPosition = newestLeftRoad.transform.position;
             newPosition.z += build;
-            oldestLeftRoad.transform.position = newPosition;
+
             for (int i = 0; i < LeftRoad.Length - 1; i++)
             {
                 LeftRoad[i] = LeftRoad[i + 1];
             }
-            LeftRoad[LeftRoad.Length - 1] = oldestLeftRoad;
+
+            if(player.transform.position.z > 1000f)
+            {
+                Destroy(oldestLeftRoad);
+                 LeftRoad[LeftRoad.Length -1]  = Instantiate(buildRoadPrefab_v2[0], newPosition, Quaternion.identity, transform);
+            }
+            else
+            {
+                oldestLeftRoad.transform.position = newPosition;
+                LeftRoad[LeftRoad.Length - 1] = oldestLeftRoad;
+            }
+            
         }
     }
     void UpdateBuildRoadRight()
@@ -119,12 +132,21 @@ public class RoadManager : MonoBehaviour
             // Tính toán vị trí mới
             Vector3 newPosition = newestLeftRoad.transform.position;
             newPosition.z += build;
-            oldestLeftRoad.transform.position = newPosition;
             for (int i = 0; i < RightRoad.Length - 1; i++)
             {
                 RightRoad[i] = RightRoad[i + 1];
             }
-            RightRoad[RightRoad.Length - 1] = oldestLeftRoad;
+           
+            if (player.transform.position.z > 1000f)
+            {
+                Destroy(oldestLeftRoad);
+                RightRoad[LeftRoad.Length - 1] = Instantiate(buildRoadPrefab_v2[0], newPosition, Quaternion.Euler(0, 180, 0), transform);
+            }
+            else
+            {
+                oldestLeftRoad.transform.position = newPosition;
+                RightRoad[RightRoad.Length - 1] = oldestLeftRoad;
+            }
         }
     }
     public float spawn()

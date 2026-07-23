@@ -2,7 +2,6 @@
 
 public class obstacle : MonoBehaviour
 {
-
     void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("player");
