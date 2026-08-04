@@ -5,7 +5,6 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [Header("Cài đặt di chuyển")]
-    [SerializeField] private float speed = 5f;
     [SerializeField] private float turnSpeed = 10f; 
     private bool isMoveLeft = false;
     private bool isMoveRight = false;
@@ -21,6 +20,16 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float rayLength = 0.5f;
     public bool isCarGrounded = false;
+
+    [Header("Cài đặt tốc độ và bẻ lái")]
+    [SerializeField] private float speed = 5f;
+    [SerializeField] private float speedturn = 4f;
+    [SerializeField] private float speedminturn = 2f;
+    [SerializeField] private float acceleration = 1f;
+
+
+    private float currentSpeed;
+
 
     private Rigidbody rb;
     private float maxSteerAngle = 30f;    
@@ -69,11 +78,20 @@ public class Player : MonoBehaviour
 
     private void Movement()
     {
+
+        if (Math.Abs(turnDirection) >= 0.15)
+        {
+            currentSpeed = Mathf.Lerp(currentSpeed, speedturn, speedminturn*Time.fixedDeltaTime);
+        }
+        else
+        {
+            currentSpeed = Mathf.Lerp(currentSpeed,speed, acceleration * Time.fixedDeltaTime);
+        }
         float rotateAmount = turnDirection * turnSpeed * Time.fixedDeltaTime;
         transform.Rotate(0, rotateAmount, 0);
 
      
-        transform.Translate(Vector3.forward * speed * Time.fixedDeltaTime, Space.Self);
+        transform.Translate(Vector3.forward * currentSpeed * Time.fixedDeltaTime, Space.Self);
 
     
         Vector3 currentPos = transform.position;
