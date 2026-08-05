@@ -17,11 +17,12 @@ public class RoadManager : MonoBehaviour
     [SerializeField] private float triggerOffset = 15f;
     private float resetPos = 500f;
 
-    // CÁC BIẾN KIỂM SOÁT QUÁ TRÌNH CHUYỂN GIAO (KHÔNG BỊ ẢNH HƯỞNG BỞI FLOATING ORIGIN)
     private bool isStage2 = false;
     private int replacedRoadCount = 0;
     private int replacedLeftCount = 0;
     private int replacedRightCount = 0;
+
+
 
     private void Awake()
     {
@@ -95,6 +96,7 @@ public class RoadManager : MonoBehaviour
                 // Khi chưa đến Map mới, HOẶC khi đã thay thế XONG 100% Map mới -> Quay lại tái sử dụng
                 oldestRoad.transform.position = newPosition;
                 roads[roads.Length - 1] = oldestRoad;
+                Physics.SyncTransforms();
             }
         }
     }
@@ -107,6 +109,7 @@ public class RoadManager : MonoBehaviour
             Vector3 newPosition = LeftRoad[LeftRoad.Length - 1].transform.position;
             newPosition.z += build;
 
+
             for (int i = 0; i < LeftRoad.Length - 1; i++)
             {
                 LeftRoad[i] = LeftRoad[i + 1];
@@ -116,6 +119,12 @@ public class RoadManager : MonoBehaviour
             {
                 Destroy(oldestLeftRoad);
                 int rand = Random.Range(0, buildRoadPrefab_v2.Length);
+
+                if (rand == 0)
+                {
+                    newPosition.x = -5f;
+                }
+
                 LeftRoad[LeftRoad.Length - 1] = Instantiate(buildRoadPrefab_v2[rand], newPosition, Quaternion.identity, transform);
                 replacedLeftCount++;
             }
@@ -123,6 +132,7 @@ public class RoadManager : MonoBehaviour
             {
                 oldestLeftRoad.transform.position = newPosition;
                 LeftRoad[LeftRoad.Length - 1] = oldestLeftRoad;
+
             }
         }
     }
@@ -134,6 +144,10 @@ public class RoadManager : MonoBehaviour
             GameObject oldestRightRoad = RightRoad[0];
             Vector3 newPosition = RightRoad[RightRoad.Length - 1].transform.position;
             newPosition.z += build;
+            if (LeftRoad[LeftRoad.Length - 1] == roads_2[0])
+            {
+                newPosition.x = 5f;
+            }
 
             for (int i = 0; i < RightRoad.Length - 1; i++)
             {
@@ -144,6 +158,10 @@ public class RoadManager : MonoBehaviour
             {
                 Destroy(oldestRightRoad);
                 int rand = Random.Range(0, buildRoadPrefab_v2.Length);
+                if (rand == 0)
+                {
+                    newPosition.x = 5f;
+                }
                 RightRoad[RightRoad.Length - 1] = Instantiate(buildRoadPrefab_v2[rand], newPosition, Quaternion.Euler(0, 180, 0), transform);
                 replacedRightCount++;
             }
@@ -157,6 +175,6 @@ public class RoadManager : MonoBehaviour
 
     public float spawn()
     {
-        return roads[7].transform.position.z;
+        return roads[18].transform.position.z;
     }
 }

@@ -62,9 +62,11 @@ public class Player : MonoBehaviour
         CheckAllWheelsGrounded();
 
         // Chỉ cho phép xe chạy và bẻ lái khi có ít nhất 1 bánh (hoặc cả 4 bánh) chạm đất
-       
+        if (isCarGrounded)
+        {
             Movement();
             Turn();
+        }
         
     }
 
@@ -90,10 +92,11 @@ public class Player : MonoBehaviour
         float rotateAmount = turnDirection * turnSpeed * Time.fixedDeltaTime;
         transform.Rotate(0, rotateAmount, 0);
 
-     
-        transform.Translate(Vector3.forward * currentSpeed * Time.fixedDeltaTime, Space.Self);
 
-    
+       rb.linearVelocity = transform.forward * speed;
+        
+
+
         Vector3 currentPos = transform.position;
         currentPos.x = Mathf.Clamp(currentPos.x, -maxX, maxX);
         transform.position = currentPos;
@@ -157,5 +160,10 @@ public class Player : MonoBehaviour
     public void UpPoiterRight() { isMoveRight = false; }
     public void DownPointerLeft() { isMoveLeft = true; }
     public void DownPointerRight() { isMoveRight = true; }
+    private void OnCollisionEnter(Collision collision)
+    {
+        // Mỗi khi xe va chạm với bất kỳ thứ gì, nó sẽ in tên vật thể đó ra cửa sổ Console
+        Debug.Log("<color=red>Xe vừa tông trúng vật thể tên là: </color>" + collision.gameObject.name);
+    }
 
 }
