@@ -14,10 +14,9 @@ public class obstacle : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("player"))
+        if(other.CompareTag("Player"))
         {
             Debug.Log("Va cham");
-            // Thực hiện hành động khi va chạm với Player
         }
     }
     private void destroyObs()

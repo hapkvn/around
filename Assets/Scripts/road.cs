@@ -175,6 +175,6 @@ public class RoadManager : MonoBehaviour
 
     public float spawn()
     {
-        return roads[18].transform.position.z;
+        return roads[10].transform.position.z;
     }
 }

@@ -19,7 +19,7 @@ RenderSettings:
   m_FogMode: 1
   m_FogDensity: 0.016
   m_LinearFogStart: 25
-  m_LinearFogEnd: 100
+  m_LinearFogEnd: 200
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
@@ -1757,6 +1757,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2083260006}
   - component: {fileID: 2083260005}
+  - component: {fileID: 2083260007}
   m_Layer: 0
   m_Name: Virtual Camera
   m_TagString: Untagged
@@ -1819,6 +1820,33 @@ Transform:
   - {fileID: 364670972}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &2083260007
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2083260004}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!54 &2127832042
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1827,7 +1855,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132147927293625}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 1000
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1870,9 +1898,13 @@ MonoBehaviour:
   rayLength: 3
   isCarGrounded: 0
   speed: 50
-  speedturn: 35
-  speedminturn: 20
-  acceleration: 10
+  speedturn: 20
+  speedminturn: 10
+  acceleration: 5
+  popUpForce: 5000
+  slideFriction: 10
+  obstacleKnockback: 1000
+  camera_rb: {fileID: 2083260007}
 --- !u!4 &50596595559434280
 Transform:
   m_ObjectHideFlags: 0

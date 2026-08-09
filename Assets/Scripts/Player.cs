@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using Unity.VisualScripting;
 using UnityEngine;
+using Cinemachine;
 
 public class Player : MonoBehaviour
 {
@@ -26,6 +28,15 @@ public class Player : MonoBehaviour
     [SerializeField] private float speedturn = 4f;
     [SerializeField] private float speedminturn = 2f;
     [SerializeField] private float acceleration = 1f;
+
+    [Header("Cài đặt Tai nạn")]
+    public float popUpForce = 10000f;       // Lực hất xe tung lên trời
+    public float slideFriction = 10f;       // Lực cản để xe trượt chậm dần (Drag)
+    public float obstacleKnockback = 2000f;
+    private bool isCrashed = false; // Biến đánh dấu xe đã hỏng
+
+    [Header("Cài đặt Camera")]
+    [SerializeField] private Rigidbody camera_rb;
 
 
     private float currentSpeed;
@@ -62,7 +73,7 @@ public class Player : MonoBehaviour
         CheckAllWheelsGrounded();
 
         // Chỉ cho phép xe chạy và bẻ lái khi có ít nhất 1 bánh (hoặc cả 4 bánh) chạm đất
-        if (isCarGrounded)
+        if (isCarGrounded && !isCrashed)
         {
             Movement();
             Turn();
@@ -162,8 +173,40 @@ public class Player : MonoBehaviour
     public void DownPointerRight() { isMoveRight = true; }
     private void OnCollisionEnter(Collision collision)
     {
-        // Mỗi khi xe va chạm với bất kỳ thứ gì, nó sẽ in tên vật thể đó ra cửa sổ Console
-        Debug.Log("<color=red>Xe vừa tông trúng vật thể tên là: </color>" + collision.gameObject.name);
+        // 1. Kiểm tra va chạm và đảm bảo xe chưa bị tông trước đó
+        if (collision.gameObject.CompareTag("obstacle") && !isCrashed)
+        {
+            isCrashed = true;
+            camera_rb.isKinematic = true;
+
+            CinemachineVirtualCamera vcam = FindAnyObjectByType<CinemachineVirtualCamera>();
+            if(vcam != null)
+            {
+                vcam.Follow = null;
+                vcam.LookAt = null;
+            }
+
+            rb.linearDamping = slideFriction;
+            Vector3 slideVelocity = transform.forward * (rb.linearVelocity.magnitude * 0.3f);
+            rb.linearVelocity = slideVelocity;
+            rb.AddForce(Vector3.up * popUpForce, ForceMode.Impulse);
+
+            Rigidbody obs = collision.gameObject.GetComponent<Rigidbody>();
+
+            if(obs != null)
+            {
+                obs.isKinematic = false;
+                Vector3 knocback = (Vector3.up + Vector3.forward).normalized;
+                obs.AddForce(knocback * obstacleKnockback, ForceMode.Impulse);
+            }
+        }
+    }
+    
+
+
+    public bool IsEndGame()
+    {
+        return isCrashed;
     }
 
 }
