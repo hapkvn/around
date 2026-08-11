@@ -99,14 +99,13 @@ public class Player : MonoBehaviour
         else
         {
             currentSpeed = Mathf.Lerp(currentSpeed,speed, acceleration * Time.fixedDeltaTime);
+
         }
         float rotateAmount = turnDirection * turnSpeed * Time.fixedDeltaTime;
+
         transform.Rotate(0, rotateAmount, 0);
 
-
-       rb.linearVelocity = transform.forward * speed;
-        
-
+        rb.linearVelocity = transform.forward * speed;
 
         Vector3 currentPos = transform.position;
         currentPos.x = Mathf.Clamp(currentPos.x, -maxX, maxX);
@@ -180,8 +179,12 @@ public class Player : MonoBehaviour
             camera_rb.isKinematic = true;
 
             CinemachineVirtualCamera vcam = FindAnyObjectByType<CinemachineVirtualCamera>();
+
             if(vcam != null)
             {
+                Vector3 currentPos = new Vector3(0, 3.612015f, transform.position.z - 5.06311f);
+                
+                vcam.transform.position = currentPos;
                 vcam.Follow = null;
                 vcam.LookAt = null;
             }
