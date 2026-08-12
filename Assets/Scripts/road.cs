@@ -87,7 +87,7 @@ public class RoadManager : MonoBehaviour
 
                 // Lấy an toàn index, tránh bị văng game nếu mảng roads_2 ít hơn roads
                 int safeIndex = Mathf.Min(replacedRoadCount, roads_2.Length - 1);
-                roads[roads.Length - 1] = Instantiate(roads_2[safeIndex], newPosition, Quaternion.identity, transform);
+                roads[roads.Length - 1] = Instantiate(Map_Manager.instance.returnRoad(), newPosition, Quaternion.identity, transform);
 
                 replacedRoadCount++;
             }
@@ -125,7 +125,7 @@ public class RoadManager : MonoBehaviour
                     newPosition.x = -5f;
                 }
 
-                LeftRoad[LeftRoad.Length - 1] = Instantiate(buildRoadPrefab_v2[rand], newPosition, Quaternion.identity, transform);
+                LeftRoad[LeftRoad.Length - 1] = Instantiate(Map_Manager.instance.returnLeftView(), newPosition, Quaternion.identity, transform);
                 replacedLeftCount++;
             }
             else
@@ -162,7 +162,7 @@ public class RoadManager : MonoBehaviour
                 {
                     newPosition.x = 5f;
                 }
-                RightRoad[RightRoad.Length - 1] = Instantiate(buildRoadPrefab_v2[rand], newPosition, Quaternion.Euler(0, 180, 0), transform);
+                RightRoad[RightRoad.Length - 1] = Instantiate(Map_Manager.instance.returnRightView(), newPosition, Quaternion.Euler(0, 180, 0), transform);
                 replacedRightCount++;
             }
             else

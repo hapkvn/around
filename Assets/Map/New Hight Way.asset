@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a28358b93860b34d8da26499fd25df9, type: 3}
+  m_Name: New Hight Way
+  m_EditorClassIdentifier: Assembly-CSharp::HightWay
+  mapName: 
+  sceneries:
+  - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
+  left_view:
+  - {fileID: 3706046297898349234, guid: de41e0dc6e437ac438bab2add87e1598, type: 3}
+  right_view:
+  - {fileID: 4404232829951097565, guid: b012ed89015ce244382222a1d8e132de, type: 3}
+  obs: []
