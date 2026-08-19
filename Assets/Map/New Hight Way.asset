@@ -19,4 +19,9 @@ MonoBehaviour:
   - {fileID: 3706046297898349234, guid: de41e0dc6e437ac438bab2add87e1598, type: 3}
   right_view:
   - {fileID: 4404232829951097565, guid: b012ed89015ce244382222a1d8e132de, type: 3}
+  - {fileID: 4404232829951097565, guid: eead696a377301a468f95ce78a30fec7, type: 3}
+  - {fileID: 4404232829951097565, guid: a98b546a7d35646459bcb48f058cbc67, type: 3}
   obs: []
+  PosLv: -5
+  PosRv: 5
+  roadpos: -5

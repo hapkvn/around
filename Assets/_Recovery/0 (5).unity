@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 1, g: 1, b: 1, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.016
@@ -1142,7 +1142,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30b4d8c7000d3de4da237a16254bebb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::road
-  roads: []
+  roads:
+  - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
+  - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
+  - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
+  - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
+  - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
+  - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
+  - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
+  - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
+  - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
+  - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
+  - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
+  - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
+  - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
+  - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
+  - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
+  - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
+  - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
+  - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
+  - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
+  - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
   roads_2:
   - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
   buildRoadPrefab:
@@ -1150,12 +1170,12 @@ MonoBehaviour:
   - {fileID: 9092438686313137434, guid: 66d6a2f902eccf34382bfd9f756bd4cc, type: 3}
   - {fileID: 7375199033439051263, guid: 35c4605ff9e9f9245a87788dc85f503c, type: 3}
   - {fileID: 8781468816726579598, guid: 88147580132340b45bd4b6a63c0efa33, type: 3}
-  buildRoadPrefab_v2: []
+  buildRoadPrefab_v2:
+  - {fileID: 3706046297898349234, guid: de41e0dc6e437ac438bab2add87e1598, type: 3}
   player: {fileID: 919132147927293625}
   roadLength: 20
   build: 10
   triggerOffset: 15
-  distancePerMap: 500
 --- !u!4 &866814696
 Transform:
   m_ObjectHideFlags: 0
@@ -1239,9 +1259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Map_Manager
   listMap:
-  - {fileID: 11400000, guid: 0bdf98f6809c4814d8df660e30b9eb32, type: 2}
   - {fileID: 11400000, guid: af7d591f61666f14f87c780eff27b6cb, type: 2}
-  - {fileID: 11400000, guid: 0ffbb0207c5e68045ba600589e6014cf, type: 2}
   randomIndex: 0
 --- !u!1 &1257324555
 GameObject:

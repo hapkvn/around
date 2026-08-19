@@ -48,5 +48,10 @@ public class FloatingOrigin : MonoBehaviour
             // Đồng thời dời luôn bộ đệm nội bộ của Cinemachine, giữ nguyên khoảng cách tuyệt đối!
             vCam.OnTargetObjectWarped(vCam.Follow, -offset);
         }
+        // Đồng bộ lại mốc gọi Map mới của RoadManager cho khớp với tọa độ vừa lùi
+        if (RoadManager.instance != null)
+        {
+            RoadManager.instance.AdjustResetPosition(offset.z);
+        }
     }
 }

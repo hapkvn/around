@@ -16,13 +16,15 @@ public class RoadManager : MonoBehaviour
     [SerializeField] private float build = 10f;
     [SerializeField] private float triggerOffset = 15f;
     private float resetPos = 500f;
+    private int RoadCount = 20;
+
+    [Header("Khoảng cách mỗi lần đổi Map")]
+    public float distancePerMap = 1000f;
 
     private bool isStage2 = false;
     private int replacedRoadCount = 0;
     private int replacedLeftCount = 0;
     private int replacedRightCount = 0;
-
-
 
     private void Awake()
     {
@@ -32,34 +34,59 @@ public class RoadManager : MonoBehaviour
 
     void Start()
     {
-        LeftRoad = new GameObject[roads.Length * 2];
-        RightRoad = new GameObject[roads.Length * 2];
+        roads = new GameObject[RoadCount];
+        LeftRoad = new GameObject[RoadCount * 2];
+        RightRoad = new GameObject[RoadCount * 2];
 
+        // 1. TẠO ĐƯỜNG CHÍNH (Đã sửa để lấy đúng tọa độ roadpos từ MapConfig)
         for (int i = 0; i < roads.Length; i++)
         {
-            roads[i] = Instantiate(roads[i], new Vector3(-5, 0, i * roadLength - 10), Quaternion.identity, transform);
+            GameObject roadPrefab = Map_Manager.instance.returnRoad();
+            float roadX = Map_Manager.instance.returnPRoad(); // LẤY CHUẨN TỪ DATA
+
+            roads[i] = Instantiate(roadPrefab, new Vector3(roadX, 0, i * roadLength - 10), Quaternion.identity, transform);
         }
 
+        // 2. TẠO CẢNH TRÁI
         for (int i = 0; i < LeftRoad.Length; i++)
         {
-            int randomIndex = Random.Range(0, buildRoadPrefab.Length);
-            LeftRoad[i] = Instantiate(buildRoadPrefab[randomIndex], new Vector3(-15, 0, i * build), Quaternion.identity, transform);
+            GameObject leftPrefab = Map_Manager.instance.returnLeftView();
+            float leftPosX = Map_Manager.instance.returnPL();
+
+            float roX = leftPrefab.transform.eulerAngles.x;
+            float roZ = leftPrefab.transform.eulerAngles.z;
+
+            LeftRoad[i] = Instantiate(leftPrefab, new Vector3(leftPosX, 0, i * build), Quaternion.Euler(roX, 0, roZ), transform);
         }
 
+        // 3. TẠO CẢNH PHẢI
         for (int i = 0; i < RightRoad.Length; i++)
         {
-            int randomIndex = Random.Range(0, buildRoadPrefab.Length);
-            RightRoad[i] = Instantiate(buildRoadPrefab[randomIndex], new Vector3(15, 0, i * build), Quaternion.Euler(0, -180, 0), transform);
+            GameObject rightPrefab = Map_Manager.instance.returnRightView();
+            float rightPosX = Map_Manager.instance.returnPR();
+
+            float roX = rightPrefab.transform.eulerAngles.x;
+            float roZ = rightPrefab.transform.eulerAngles.z;
+
+            RightRoad[i] = Instantiate(rightPrefab, new Vector3(rightPosX, 0, i * build), Quaternion.Euler(roX, 180, roZ), transform);
         }
     }
 
     void Update()
     {
-        // Chốt trạng thái chuyển sang Map mới. 
-        // Khi đã bật lên True, dù Floating Origin có kéo Z về 0 thì trạng thái này vẫn được giữ nguyên.
         if (!isStage2 && player.transform.position.z > resetPos - 100)
         {
             isStage2 = true;
+            Map_Manager.instance.LoadMap();
+        }
+
+        if (isStage2 && replacedRoadCount >= roads.Length && replacedLeftCount >= LeftRoad.Length && replacedRightCount >= RightRoad.Length)
+        {
+            isStage2 = false;
+            replacedRoadCount = 0;
+            replacedLeftCount = 0;
+            replacedRightCount = 0;
+            resetPos += distancePerMap;
         }
 
         UpdateRoad();
@@ -75,25 +102,22 @@ public class RoadManager : MonoBehaviour
             Vector3 newPosition = roads[roads.Length - 1].transform.position;
             newPosition.z += roadLength;
 
+            // SỬA: Luôn bám theo tọa độ đường của Map hiện tại
+            newPosition.x = Map_Manager.instance.returnPRoad();
+
             for (int i = 0; i < roads.Length - 1; i++)
             {
                 roads[i] = roads[i + 1];
             }
 
-            // Nếu đang ở map mới VÀ chưa thay thế xong 100% số lượng đường
             if (isStage2 && replacedRoadCount < roads.Length)
             {
                 Destroy(oldestRoad);
-
-                // Lấy an toàn index, tránh bị văng game nếu mảng roads_2 ít hơn roads
-                int safeIndex = Mathf.Min(replacedRoadCount, roads_2.Length - 1);
                 roads[roads.Length - 1] = Instantiate(Map_Manager.instance.returnRoad(), newPosition, Quaternion.identity, transform);
-
                 replacedRoadCount++;
             }
             else
             {
-                // Khi chưa đến Map mới, HOẶC khi đã thay thế XONG 100% Map mới -> Quay lại tái sử dụng
                 oldestRoad.transform.position = newPosition;
                 roads[roads.Length - 1] = oldestRoad;
                 Physics.SyncTransforms();
@@ -109,6 +133,8 @@ public class RoadManager : MonoBehaviour
             Vector3 newPosition = LeftRoad[LeftRoad.Length - 1].transform.position;
             newPosition.z += build;
 
+            // LUÔN LẤY TỌA ĐỘ CHUẨN TỪ MAPCONFIG
+            newPosition.x = Map_Manager.instance.returnPL();
 
             for (int i = 0; i < LeftRoad.Length - 1; i++)
             {
@@ -118,21 +144,21 @@ public class RoadManager : MonoBehaviour
             if (isStage2 && replacedLeftCount < LeftRoad.Length)
             {
                 Destroy(oldestLeftRoad);
-                int rand = Random.Range(0, buildRoadPrefab_v2.Length);
 
-                if (rand == 0)
-                {
-                    newPosition.x = -5f;
-                }
+                // MÌNH ĐÃ XÓA LOGIC RANDOM IF (rand == 0) Ở ĐÂY
+                // Vì nó làm lệch tọa độ chuẩn của MapConfig mà bạn thiết lập
 
-                LeftRoad[LeftRoad.Length - 1] = Instantiate(Map_Manager.instance.returnLeftView(), newPosition, Quaternion.identity, transform);
+                GameObject leftPrefab = Map_Manager.instance.returnLeftView();
+                float roX = leftPrefab.transform.eulerAngles.x;
+                float roZ = leftPrefab.transform.eulerAngles.z;
+
+                LeftRoad[LeftRoad.Length - 1] = Instantiate(leftPrefab, newPosition, Quaternion.Euler(roX, 0, roZ), transform);
                 replacedLeftCount++;
             }
             else
             {
                 oldestLeftRoad.transform.position = newPosition;
                 LeftRoad[LeftRoad.Length - 1] = oldestLeftRoad;
-
             }
         }
     }
@@ -144,10 +170,9 @@ public class RoadManager : MonoBehaviour
             GameObject oldestRightRoad = RightRoad[0];
             Vector3 newPosition = RightRoad[RightRoad.Length - 1].transform.position;
             newPosition.z += build;
-            if (LeftRoad[LeftRoad.Length - 1] == roads_2[0])
-            {
-                newPosition.x = 5f;
-            }
+
+            // LUÔN LẤY TỌA ĐỘ CHUẨN TỪ MAPCONFIG
+            newPosition.x = Map_Manager.instance.returnPR();
 
             for (int i = 0; i < RightRoad.Length - 1; i++)
             {
@@ -157,12 +182,15 @@ public class RoadManager : MonoBehaviour
             if (isStage2 && replacedRightCount < RightRoad.Length)
             {
                 Destroy(oldestRightRoad);
-                int rand = Random.Range(0, buildRoadPrefab_v2.Length);
-                if (rand == 0)
-                {
-                    newPosition.x = 5f;
-                }
-                RightRoad[RightRoad.Length - 1] = Instantiate(Map_Manager.instance.returnRightView(), newPosition, Quaternion.Euler(0, 180, 0), transform);
+
+                // MÌNH ĐÃ XÓA LOGIC RANDOM IF (rand == 0) Ở ĐÂY
+                // Tránh tình trạng cảnh vật bị giật vào lòng đường trái ý bạn
+
+                GameObject rightPrefab = Map_Manager.instance.returnRightView();
+                float roX = rightPrefab.transform.eulerAngles.x;
+                float roZ = rightPrefab.transform.eulerAngles.z;
+
+                RightRoad[RightRoad.Length - 1] = Instantiate(rightPrefab, newPosition, Quaternion.Euler(roX, 180, roZ), transform);
                 replacedRightCount++;
             }
             else
@@ -175,6 +203,15 @@ public class RoadManager : MonoBehaviour
 
     public float spawn()
     {
-        return roads[10].transform.position.z;
+        if (roads == null || roads.Length <= 5 || roads[5] == null)
+        {
+            return 5 * roadLength - 10f;
+        }
+        return roads[5].transform.position.z;
+    }
+
+    public void AdjustResetPosition(float offset)
+    {
+        resetPos -= offset;
     }
 }
