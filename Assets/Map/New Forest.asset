@@ -20,6 +20,6 @@ MonoBehaviour:
   right_view:
   - {fileID: 2372751069685738091, guid: e3982b28faf06de4d947ce477cfb1e3a, type: 3}
   obs: []
-  PosLv: -15
-  PosRv: 15
+  PosLv: -10
+  PosRv: 10
   roadpos: -5

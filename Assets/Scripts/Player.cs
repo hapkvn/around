@@ -177,6 +177,7 @@ public class Player : MonoBehaviour
         {
             isCrashed = true;
             camera_rb.isKinematic = true;
+            trail.SetActive(false);
 
             CinemachineVirtualCamera vcam = FindAnyObjectByType<CinemachineVirtualCamera>();
 
