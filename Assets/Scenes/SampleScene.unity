@@ -731,8 +731,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.4716981, g: 0.42497328, b: 0.42497328, a: 1}
-      key1: {r: 0, g: 0, b: 0, a: 0.8117647}
+      key0: {r: 0, g: 0, b: 0, a: 1}
+      key1: {r: 0.4716981, g: 0.42497328, b: 0.42497328, a: 0.49803922}
       key2: {r: 0, g: 0, b: 0, a: 1}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -741,7 +741,7 @@ TrailRenderer:
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
       ctime1: 65535
-      ctime2: 0
+      ctime2: 65535
       ctime3: 0
       ctime4: 0
       ctime5: 0
@@ -766,9 +766,9 @@ TrailRenderer:
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
-  m_MinVertexDistance: 0
+  m_MinVertexDistance: 0.1
   m_Autodestruct: 0
-  m_Emitting: 0
+  m_Emitting: 1
   m_ApplyActiveColorSpace: 1
 --- !u!1 &371636006
 GameObject:
@@ -1050,6 +1050,71 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!1001 &420530830
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 543450651580515331}
+    m_Modifications:
+    - target: {fileID: 5484087433464310950, guid: ae70748319c299448b6d6e1d03979ef4, type: 3}
+      propertyPath: m_Name
+      value: smoke
+      objectReference: {fileID: 0}
+    - target: {fileID: 6305726405880451319, guid: ae70748319c299448b6d6e1d03979ef4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6305726405880451319, guid: ae70748319c299448b6d6e1d03979ef4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6305726405880451319, guid: ae70748319c299448b6d6e1d03979ef4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6305726405880451319, guid: ae70748319c299448b6d6e1d03979ef4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6305726405880451319, guid: ae70748319c299448b6d6e1d03979ef4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6305726405880451319, guid: ae70748319c299448b6d6e1d03979ef4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6305726405880451319, guid: ae70748319c299448b6d6e1d03979ef4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6305726405880451319, guid: ae70748319c299448b6d6e1d03979ef4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6305726405880451319, guid: ae70748319c299448b6d6e1d03979ef4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6305726405880451319, guid: ae70748319c299448b6d6e1d03979ef4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6836998030957053402, guid: ae70748319c299448b6d6e1d03979ef4, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6836998030957053402, guid: ae70748319c299448b6d6e1d03979ef4, type: 3}
+      propertyPath: InitialModule.gravityModifier.scalar
+      value: -0.2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ae70748319c299448b6d6e1d03979ef4, type: 3}
 --- !u!1 &443399731
 GameObject:
   m_ObjectHideFlags: 0
@@ -1114,6 +1179,16 @@ Transform:
   m_Children: []
   m_Father: {fileID: 543450651580515331}
   m_LocalEulerAnglesHint: {x: 23.08, y: 0, z: 0}
+--- !u!4 &736974847 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6305726405880451319, guid: ae70748319c299448b6d6e1d03979ef4, type: 3}
+  m_PrefabInstance: {fileID: 420530830}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &736974849 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6836998030957053402, guid: ae70748319c299448b6d6e1d03979ef4, type: 3}
+  m_PrefabInstance: {fileID: 420530830}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &740079795
 GameObject:
   m_ObjectHideFlags: 0
@@ -1674,9 +1749,9 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.4716981, g: 0.42497328, b: 0.42497328, a: 1}
-      key1: {r: 0, g: 0, b: 0, a: 0.8117647}
-      key2: {r: 0.4716981, g: 0.42497328, b: 0.42497328, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
+      key1: {r: 0.4716981, g: 0.42497328, b: 0.42497328, a: 0.49803922}
+      key2: {r: 0, g: 0, b: 0, a: 1}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -1684,7 +1759,7 @@ TrailRenderer:
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
       ctime1: 65535
-      ctime2: 24479
+      ctime2: 40285
       ctime3: 0
       ctime4: 0
       ctime5: 0
@@ -1709,7 +1784,7 @@ TrailRenderer:
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
-  m_MinVertexDistance: 0
+  m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
@@ -2001,9 +2076,9 @@ Rigidbody:
   m_GameObject: {fileID: 919132147927293625}
   serializedVersion: 5
   m_Mass: 1000
-  m_LinearDamping: 0
+  m_LinearDamping: 12
   m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_CenterOfMass: {x: 0, y: -0.2, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
@@ -2012,7 +2087,7 @@ Rigidbody:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_ImplicitCom: 1
+  m_ImplicitCom: 0
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -2037,6 +2112,7 @@ MonoBehaviour:
   rearLeftWheel: {fileID: 6500972350313768688}
   rearRightWheel: {fileID: 2128198085082445078}
   trail: {fileID: 443399731}
+  smoke: {fileID: 736974849}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -2050,6 +2126,7 @@ MonoBehaviour:
   slideFriction: 10
   obstacleKnockback: 1000
   camera_rb: {fileID: 2083260007}
+  downforce: 50
 --- !u!4 &50596595559434280
 Transform:
   m_ObjectHideFlags: 0
@@ -2134,6 +2211,7 @@ Transform:
   - {fileID: 2128198085082445078}
   - {fileID: 1257324556}
   - {fileID: 371636007}
+  - {fileID: 736974847}
   - {fileID: 516870259}
   - {fileID: 443399732}
   m_Father: {fileID: 0}
@@ -2182,8 +2260,8 @@ GameObject:
   m_Component:
   - component: {fileID: 543450651580515331}
   - component: {fileID: 2127832044}
-  - component: {fileID: 919132147927293626}
   - component: {fileID: 2127832042}
+  - component: {fileID: 919132147927293626}
   - component: {fileID: 919132147927293627}
   m_Layer: 0
   m_Name: race

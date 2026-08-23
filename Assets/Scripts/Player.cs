@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform rearLeftWheel;
     [SerializeField] private Transform rearRightWheel;
     [SerializeField] private GameObject trail;
+    [SerializeField] private ParticleSystem smoke;
 
     [Header("Cài đặt mặt đất")]
     [SerializeField] private LayerMask groundLayer;
@@ -45,6 +46,7 @@ public class Player : MonoBehaviour
     private Rigidbody rb;
     private float maxSteerAngle = 30f;    
     private float maxX = 20f;
+    public float downforce = 50f;
 
     public static Player instance { get; private set; }
 
@@ -71,6 +73,7 @@ public class Player : MonoBehaviour
 
         // Cập nhật trạng thái chạm đất liên tục
         CheckAllWheelsGrounded();
+        rb.AddForce(-transform.up * downforce * rb.linearVelocity.magnitude);
 
         // Chỉ cho phép xe chạy và bẻ lái khi có ít nhất 1 bánh (hoặc cả 4 bánh) chạm đất
         if (isCarGrounded && !isCrashed)
@@ -91,6 +94,15 @@ public class Player : MonoBehaviour
 
     private void Movement()
     {
+        RaycastHit hit;
+        Vector3 moveDir = transform.forward; // Hướng mặc định
+
+        // Bắn 1 tia từ gầm xe xuống đất (Giống biến Ray Length = 3 của bạn)
+        if (Physics.Raycast(transform.position, -transform.up, out hit, 3f, LayerMask.GetMask("ground")))
+        {
+            // Bẻ cong hướng đi tới sao cho nó luôn trượt TRÊN mặt dốc, thay vì đâm thẳng lên trời
+            moveDir = Vector3.ProjectOnPlane(transform.forward, hit.normal).normalized;
+        }
 
         if (Math.Abs(turnDirection) >= 0.15)
         {
@@ -98,14 +110,14 @@ public class Player : MonoBehaviour
         }
         else
         {
-            currentSpeed = Mathf.Lerp(currentSpeed,speed, acceleration * Time.fixedDeltaTime);
+            currentSpeed = Mathf.Lerp(currentSpeed, speed, acceleration * Time.fixedDeltaTime);
 
         }
         float rotateAmount = turnDirection * turnSpeed * Time.fixedDeltaTime;
 
         transform.Rotate(0, rotateAmount, 0);
 
-        rb.linearVelocity = transform.forward * speed;
+        rb.linearVelocity = moveDir * currentSpeed;
 
         Vector3 currentPos = transform.position;
         currentPos.x = Mathf.Clamp(currentPos.x, -maxX, maxX);
@@ -119,6 +131,7 @@ public class Player : MonoBehaviour
         if ( Math.Abs(turnDirection) >= 0.15)
         {
             trail.SetActive(true);
+            smoke.Emit(1);
         }
         else
         {

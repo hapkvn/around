@@ -36,8 +36,15 @@ public class FloatingOrigin : MonoBehaviour
                 rb.position -= offset;
             }
         }
+        TrailRenderer[] allTrails = FindObjectsByType<TrailRenderer>(FindObjectsInactive.Exclude);
+        foreach (TrailRenderer trail in allTrails)
+        {
+            trail.Clear();
+        }
 
+        // Đồng bộ hệ thống vật lý (để xe không bị khựng)
         Physics.SyncTransforms();
+
 
         // 2. DỊCH CHUYỂN BẰNG API CHUẨN CỦA CINEMACHINE
         CinemachineVirtualCamera vCam = FindAnyObjectByType<CinemachineVirtualCamera>();
