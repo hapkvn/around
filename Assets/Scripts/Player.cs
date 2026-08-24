@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform rearLeftWheel;
     [SerializeField] private Transform rearRightWheel;
     [SerializeField] private GameObject trail;
-    [SerializeField] private ParticleSystem smoke;
+    [SerializeField] private ParticleSystem[] smokes;
 
     [Header("Cài đặt mặt đất")]
     [SerializeField] private LayerMask groundLayer;
@@ -131,7 +131,10 @@ public class Player : MonoBehaviour
         if ( Math.Abs(turnDirection) >= 0.15)
         {
             trail.SetActive(true);
-            smoke.Emit(1);
+            foreach (ParticleSystem smoke in smokes)
+            {
+                smoke.Emit(1);
+            }
         }
         else
         {
