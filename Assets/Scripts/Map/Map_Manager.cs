@@ -81,4 +81,18 @@ public class Map_Manager : MonoBehaviour
     {
         return listMap[randomIndex].roadpos;
     }
+    public GameObject returnObs()
+    {
+        MapConfig mapConfig = listMap[randomIndex];
+        int randomObs = Random.Range(0, mapConfig.obs.Length);
+        return mapConfig.obs[randomObs];
+    }
+
+    public Transform returnObsPos()
+    {
+        MapConfig mapConfig = listMap[randomIndex];
+        int randomPos = Random.Range(0, mapConfig.obsPos.Length);
+        return mapConfig.obsPos[randomPos];
+    }
+
 }

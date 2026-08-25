@@ -3,9 +3,7 @@ using UnityEngine;
 
 public class SpawnEnemy : MonoBehaviour
 {
-    [Header("Cài đặt Chướng ngại vật")] 
-    [SerializeField] private Transform[] spawnPoints;
-    [SerializeField] private GameObject[] enemyPrefabs;
+   
 
     [Header("Cài đặt Thời gian")]
     [SerializeField] private float spawnInterval = 2f;     
@@ -13,7 +11,6 @@ public class SpawnEnemy : MonoBehaviour
     void Start()
     {
 
-        newSpawn();
         timer = spawnInterval;
     }
 
@@ -22,36 +19,36 @@ public class SpawnEnemy : MonoBehaviour
     {
         if (!Player.instance.IsEndGame())
         {
-            newSpawn();
             timer -= Time.deltaTime;
             if (timer <= 0)
             {
-            RandomSpawn();
-            timer = spawnInterval;
-
+                RandomSpawn();
+                timer = spawnInterval;
             }
 
         }
     }
-    private void newSpawn()
-    {
-        for (int i = 0; i < spawnPoints.Length; i++)
-        {
-            spawnPoints[i].transform.position = new Vector3(
-               spawnPoints[i].transform.position.x,
-               spawnPoints[i].transform.position.y,
-               RoadManager.instance.spawn()
-            );
-        }
-    }
+    
 
 
     private void RandomSpawn()
     {
-        int rPoint  = Random.Range(0, spawnPoints.Length);
-        int rEnemy = Random.Range(0, enemyPrefabs.Length);
+        GameObject obstacle = Map_Manager.instance.returnObs();
+        Transform rPoint  =  Map_Manager.instance.returnObsPos();
 
-        Instantiate(enemyPrefabs[rEnemy], spawnPoints[rPoint].position, Quaternion.Euler(0, 180, 0));
+        Vector3 finalSpawnPosition = new Vector3(
+            rPoint.position.x,
+            rPoint.position.y,
+            RoadManager.instance.spawn()
+        );
+
+        Quaternion rotation = Quaternion.identity;
+        if (rPoint.position.x < 0)
+        {
+            rotation = Quaternion.Euler(0, 180, 0);
+        }
+
+        Instantiate(obstacle, finalSpawnPosition, rotation);
 
     }
 }
