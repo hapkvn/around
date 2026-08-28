@@ -74,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2c8ac98fe2ee1df4b8ac82cafcc0dc5f, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 6200913798931007933, guid: 2c8ac98fe2ee1df4b8ac82cafcc0dc5f, type: 3}
       propertyPath: m_Layer
@@ -161,5 +161,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 1.323596, y: 1.2941782, z: 2.6768153}
-  m_Center: {x: 0, y: 0.6398375, z: -0.022063375}
+  m_Size: {x: 1.318775, y: 1.508522, z: 2.6925437}
+  m_Center: {x: 0.0075898767, y: 0.74001384, z: -0.018974662}

@@ -207,7 +207,7 @@ public class RoadManager : MonoBehaviour
         {
             return 5 * roadLength - 10f;
         }
-        return roads[5].transform.position.z;
+        return roads[18].transform.position.z;
     }
 
     public void AdjustResetPosition(float offset)

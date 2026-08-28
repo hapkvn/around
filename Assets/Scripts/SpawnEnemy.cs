@@ -27,8 +27,7 @@ public class SpawnEnemy : MonoBehaviour
             }
 
         }
-    }
-    
+    }  
 
 
     private void RandomSpawn()

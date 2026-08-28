@@ -14,12 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::forest
   mapName: 
   sceneries:
-  - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
+  - {fileID: 8197368860109566334, guid: 19e01e6aac108754f99798966242d9d6, type: 3}
   left_view:
   - {fileID: 2372751069685738091, guid: e3982b28faf06de4d947ce477cfb1e3a, type: 3}
   right_view:
   - {fileID: 2372751069685738091, guid: e3982b28faf06de4d947ce477cfb1e3a, type: 3}
-  obs: []
+  obs:
+  - {fileID: 4565928598445822314, guid: 02d0e8c4a9705874d811b12f7649c0de, type: 3}
+  obsPos:
+  - {fileID: 8863939143694026414, guid: 5b9cf4bfc7fc0074faf676e82cc732c2, type: 3}
+  - {fileID: 5733227933808637131, guid: ca5cc937759716b44b2f99a9f11161a5, type: 3}
+  - {fileID: 7228235204313520905, guid: 7cf6827ffff84c342acfa0b592ff9733, type: 3}
+  - {fileID: 8245893684265450358, guid: ef152d9d83a68c042a078759c6542af3, type: 3}
+  - {fileID: 8762854249364946981, guid: 715a23cd1dcb34d4c90e1c2c90675736, type: 3}
+  - {fileID: 4292117351915903808, guid: f7dfa6122e851404d88cdaa5cf7087f4, type: 3}
+  - {fileID: 6015294664453543812, guid: 0be5bff3d3065fe48b30db55669419a2, type: 3}
   PosLv: -10
   PosRv: 10
-  roadpos: -5
+  roadpos: 0
+  speedObs: 0

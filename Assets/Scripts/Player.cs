@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using Unity.VisualScripting;
 using UnityEngine;
 using Cinemachine;
 
 public class Player : MonoBehaviour
 {
     [Header("Cài đặt di chuyển")]
-    [SerializeField] private float turnSpeed = 10f; 
+    [SerializeField] private float turnSpeed = 10f;
     private bool isMoveLeft = false;
     private bool isMoveRight = false;
 
@@ -19,9 +17,12 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject trail;
     [SerializeField] private ParticleSystem[] smokes;
 
-    [Header("Cài đặt mặt đất")]
+    [Header("Cài đặt mặt đất (Hệ thống giảm xóc)")]
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private float rayLength = 0.5f;
+    [SerializeField] private float rayLength = 1.5f;      // Tăng tia dài ra một chút để quét chạm đất
+    [SerializeField] private float rideHeight = 0.5f;     // Chiều cao gầm xe cách mặt đất
+    [SerializeField] private float suspensionForce = 15000f; // Lực đẩy lò xo nâng xe
+    [SerializeField] private float suspensionDamping = 1500f; // Lực cản giảm xóc để xe không bị nảy tưng tưng
     public bool isCarGrounded = false;
 
     [Header("Cài đặt tốc độ và bẻ lái")]
@@ -31,20 +32,17 @@ public class Player : MonoBehaviour
     [SerializeField] private float acceleration = 1f;
 
     [Header("Cài đặt Tai nạn")]
-    public float popUpForce = 10000f;       // Lực hất xe tung lên trời
-    public float slideFriction = 10f;       // Lực cản để xe trượt chậm dần (Drag)
+    public float popUpForce = 10000f;
+    public float slideFriction = 10f;
     public float obstacleKnockback = 2000f;
-    private bool isCrashed = false; // Biến đánh dấu xe đã hỏng
+    private bool isCrashed = false;
 
     [Header("Cài đặt Camera")]
     [SerializeField] private Rigidbody camera_rb;
 
-
     private float currentSpeed;
-
-
     private Rigidbody rb;
-    private float maxSteerAngle = 30f;    
+    private float maxSteerAngle = 30f;
     private float maxX = 20f;
     public float downforce = 50f;
 
@@ -52,13 +50,8 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-       
+        if (instance == null) instance = this;
     }
-
 
     private float turnDirection = 0f;
 
@@ -71,23 +64,23 @@ public class Player : MonoBehaviour
     {
         GetInput();
 
-        // Cập nhật trạng thái chạm đất liên tục
-        CheckAllWheelsGrounded();
+        // 1. Áp dụng hệ thống giảm xóc đệm khí cho 4 bánh
+        ApplyHoverSuspension();
+
+        // 2. Lực ép xe xuống đường (Downforce)
         rb.AddForce(-transform.up * downforce * rb.linearVelocity.magnitude);
 
-        // Chỉ cho phép xe chạy và bẻ lái khi có ít nhất 1 bánh (hoặc cả 4 bánh) chạm đất
+        // 3. Di chuyển và bẻ lái khi xe còn sống và đang chạm đất
         if (isCarGrounded && !isCrashed)
         {
             Movement();
             Turn();
         }
-        
     }
 
     private void GetInput()
     {
         turnDirection = Input.GetAxis("Horizontal");
-
         if (isMoveLeft) turnDirection = -1f;
         else if (isMoveRight) turnDirection = 1f;
     }
@@ -95,40 +88,46 @@ public class Player : MonoBehaviour
     private void Movement()
     {
         RaycastHit hit;
-        Vector3 moveDir = transform.forward; // Hướng mặc định
+        Vector3 moveDir = transform.forward;
 
-        // Bắn 1 tia từ gầm xe xuống đất (Giống biến Ray Length = 3 của bạn)
-        if (Physics.Raycast(transform.position, -transform.up, out hit, 3f, LayerMask.GetMask("ground")))
+        if (Physics.Raycast(transform.position, -transform.up, out hit, 3f, groundLayer))
         {
-            // Bẻ cong hướng đi tới sao cho nó luôn trượt TRÊN mặt dốc, thay vì đâm thẳng lên trời
             moveDir = Vector3.ProjectOnPlane(transform.forward, hit.normal).normalized;
         }
 
-        if (Math.Abs(turnDirection) >= 0.15)
+        if (Math.Abs(turnDirection) >= 0.15f)
         {
-            currentSpeed = Mathf.Lerp(currentSpeed, speedturn, speedminturn*Time.fixedDeltaTime);
+            currentSpeed = Mathf.Lerp(currentSpeed, speedturn, speedminturn * Time.fixedDeltaTime);
         }
         else
         {
             currentSpeed = Mathf.Lerp(currentSpeed, speed, acceleration * Time.fixedDeltaTime);
-
         }
+
+        // XOAY XE ĐÚNG CHUẨN VẬT LÝ
         float rotateAmount = turnDirection * turnSpeed * Time.fixedDeltaTime;
+        Quaternion deltaRotation = Quaternion.Euler(0, rotateAmount, 0);
+        rb.MoveRotation(rb.rotation * deltaRotation);
 
-        transform.Rotate(0, rotateAmount, 0);
+        // DI CHUYỂN TÔN TRỌNG TRỌNG LỰC & LÒ XO
+        Vector3 targetVelocity = moveDir * currentSpeed;
+        targetVelocity.y = rb.linearVelocity.y; // Giữ lại lực rơi tự do và lực nâng của lò xo
+        rb.linearVelocity = targetVelocity;
 
-        rb.linearVelocity = moveDir * currentSpeed;
-
-        Vector3 currentPos = transform.position;
-        currentPos.x = Mathf.Clamp(currentPos.x, -maxX, maxX);
-        transform.position = currentPos;
+        // CHẶN BIÊN X ĐÚNG CHUẨN VẬT LÝ
+        Vector3 currentPos = rb.position;
+        if (currentPos.x > maxX || currentPos.x < -maxX)
+        {
+            currentPos.x = Mathf.Clamp(currentPos.x, -maxX, maxX);
+            rb.position = currentPos;
+        }
     }
 
     private void Turn()
     {
         float targetSteerAngle = turnDirection * maxSteerAngle;
         Quaternion targetWheelRotation = Quaternion.Euler(0, targetSteerAngle, 0);
-        if ( Math.Abs(turnDirection) >= 0.15)
+        if (Math.Abs(turnDirection) >= 0.15f)
         {
             trail.SetActive(true);
             foreach (ParticleSystem smoke in smokes)
@@ -141,41 +140,53 @@ public class Player : MonoBehaviour
             trail.SetActive(false);
         }
 
-        if (frontLeftWheel != null)
-        {
-            frontLeftWheel.localRotation = Quaternion.Lerp(frontLeftWheel.localRotation, targetWheelRotation, turnSpeed * Time.fixedDeltaTime);
-        }
-
-        if (frontRightWheel != null)
-        {
-            frontRightWheel.localRotation = Quaternion.Lerp(frontRightWheel.localRotation, targetWheelRotation, turnSpeed * Time.fixedDeltaTime);
-        }
+        if (frontLeftWheel != null) frontLeftWheel.localRotation = Quaternion.Lerp(frontLeftWheel.localRotation, targetWheelRotation, turnSpeed * Time.fixedDeltaTime);
+        if (frontRightWheel != null) frontRightWheel.localRotation = Quaternion.Lerp(frontRightWheel.localRotation, targetWheelRotation, turnSpeed * Time.fixedDeltaTime);
     }
-    private void CheckAllWheelsGrounded()
+
+    // ========================================================
+    // HỆ THỐNG GIẢM XÓC LÒ XO 4 BÁNH (SUSPENSION)
+    // ========================================================
+    private void ApplyHoverSuspension()
     {
-        // Kiểm tra từng bánh xem có chạm đất không
-        bool isFLGrounded = CheckSingleWheel(frontLeftWheel);
-        bool isFRGrounded = CheckSingleWheel(frontRightWheel);
-        bool isRLGrounded = CheckSingleWheel(rearLeftWheel);
-        bool isRRGrounded = CheckSingleWheel(rearRightWheel);
+        bool isFL = ApplySuspensionToWheel(frontLeftWheel);
+        bool isFR = ApplySuspensionToWheel(frontRightWheel);
+        bool isRL = ApplySuspensionToWheel(rearLeftWheel);
+        bool isRR = ApplySuspensionToWheel(rearRightWheel);
 
-        // Xe được tính là chạm đất nếu ÍT NHẤT 1 trong 4 bánh chạm đất
-        // (Nếu bạn muốn khắt khe hơn, bắt buộc cả 4 bánh chạm đất mới được chạy thì thay dấu || thành &&)
-        isCarGrounded = isFLGrounded || isFRGrounded || isRLGrounded || isRRGrounded;
+        isCarGrounded = isFL || isFR || isRL || isRR;
     }
 
-    // Hàm bắn tia Raycast cho 1 bánh xe
-    private bool CheckSingleWheel(Transform wheel)
+    private bool ApplySuspensionToWheel(Transform wheel)
     {
         if (wheel == null) return false;
 
-        // Bắn tia từ vị trí bánh xe, hướng thẳng xuống (-transform.up)
-        return Physics.Raycast(wheel.position, -transform.up, rayLength, groundLayer);
+        RaycastHit hit;
+        if (Physics.Raycast(wheel.position, -transform.up, out hit, rayLength, groundLayer))
+        {
+            float currentDist = hit.distance;
+            float compression = rideHeight - currentDist;
+
+            // Nếu bánh xe lún sâu hơn độ cao cho phép (rideHeight), đẩy nó lên!
+            if (compression > 0)
+            {
+                Vector3 wheelVelocity = rb.GetPointVelocity(wheel.position);
+                float upVelocity = Vector3.Dot(wheelVelocity, transform.up);
+
+                // Công thức tính lực lò xo kết hợp cản thủy lực (Giảm xóc)
+                float force = (compression * suspensionForce) - (upVelocity * suspensionDamping);
+
+                // Áp dụng lực hất lên tại chính xác vị trí của bánh xe đó
+                rb.AddForceAtPosition(transform.up * Mathf.Max(0, force), wheel.position);
+            }
+            return true;
+        }
+        return false;
     }
+
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red; // Đổi màu tia thành đỏ
-
+        Gizmos.color = Color.red;
         if (frontLeftWheel != null) Gizmos.DrawLine(frontLeftWheel.position, frontLeftWheel.position - transform.up * rayLength);
         if (frontRightWheel != null) Gizmos.DrawLine(frontRightWheel.position, frontRightWheel.position - transform.up * rayLength);
         if (rearLeftWheel != null) Gizmos.DrawLine(rearLeftWheel.position, rearLeftWheel.position - transform.up * rayLength);
@@ -186,9 +197,9 @@ public class Player : MonoBehaviour
     public void UpPoiterRight() { isMoveRight = false; }
     public void DownPointerLeft() { isMoveLeft = true; }
     public void DownPointerRight() { isMoveRight = true; }
+
     private void OnCollisionEnter(Collision collision)
     {
-        // 1. Kiểm tra va chạm và đảm bảo xe chưa bị tông trước đó
         if (collision.gameObject.CompareTag("obstacle") && !isCrashed)
         {
             isCrashed = true;
@@ -197,10 +208,9 @@ public class Player : MonoBehaviour
 
             CinemachineVirtualCamera vcam = FindAnyObjectByType<CinemachineVirtualCamera>();
 
-            if(vcam != null)
+            if (vcam != null)
             {
                 Vector3 currentPos = new Vector3(0, 3.612015f, transform.position.z - 5.06311f);
-                
                 vcam.transform.position = currentPos;
                 vcam.Follow = null;
                 vcam.LookAt = null;
@@ -212,21 +222,18 @@ public class Player : MonoBehaviour
             rb.AddForce(Vector3.up * popUpForce, ForceMode.Impulse);
 
             Rigidbody obs = collision.gameObject.GetComponent<Rigidbody>();
-
-            if(obs != null)
+            if (obs != null)
             {
                 obs.isKinematic = false;
                 Vector3 knocback = (Vector3.up + Vector3.forward).normalized;
                 obs.AddForce(knocback * obstacleKnockback, ForceMode.Impulse);
             }
         }
+        Debug.Log("<color=orange>Va chạm cứng với: </color>" + collision.gameObject.name);
     }
-    
-
 
     public bool IsEndGame()
     {
         return isCrashed;
     }
-
 }

@@ -14,14 +14,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HightWay
   mapName: 
   sceneries:
-  - {fileID: 2819825127405242175, guid: 0ef803ad868a2df4ca6e87e1aafc407c, type: 3}
+  - {fileID: 8197368860109566334, guid: 19e01e6aac108754f99798966242d9d6, type: 3}
   left_view:
   - {fileID: 3706046297898349234, guid: de41e0dc6e437ac438bab2add87e1598, type: 3}
   right_view:
   - {fileID: 4404232829951097565, guid: b012ed89015ce244382222a1d8e132de, type: 3}
   - {fileID: 4404232829951097565, guid: eead696a377301a468f95ce78a30fec7, type: 3}
   - {fileID: 4404232829951097565, guid: a98b546a7d35646459bcb48f058cbc67, type: 3}
-  obs: []
+  obs:
+  - {fileID: 4469732180089876815, guid: 10419bc4c557b6d4db1d6b654fa3e05d, type: 3}
+  - {fileID: 5626048288324709328, guid: 22ccb410c7b72e64d8c99398295bbd77, type: 3}
+  - {fileID: 3042613298856806289, guid: 928516da248dc9f418fe7500cd390948, type: 3}
+  - {fileID: 3147410224237420237, guid: 820a6b27d7a7b81498d74e3da67a9ab0, type: 3}
+  - {fileID: 1257915097702219693, guid: 9cca16070e69989429021d416cd58fa0, type: 3}
+  - {fileID: 3624025384921585336, guid: 41f6232aea64f98478de0b9262c8c35b, type: 3}
+  - {fileID: 4469732180089876815, guid: 10419bc4c557b6d4db1d6b654fa3e05d, type: 3}
+  - {fileID: 1545324074725804305, guid: 76c00469a3e32e84f9dfb669ce672c32, type: 3}
+  - {fileID: 4476121334184270715, guid: 3b286838d9029684ba775f239b2f9620, type: 3}
+  - {fileID: 701601758872399913, guid: fcc11359b0d60004788a2468e5a2564c, type: 3}
+  - {fileID: 1129011221317596839, guid: 49f7c31818d3970408a619da4bf80aa3, type: 3}
+  obsPos:
+  - {fileID: 8863939143694026414, guid: 5b9cf4bfc7fc0074faf676e82cc732c2, type: 3}
+  - {fileID: 5733227933808637131, guid: ca5cc937759716b44b2f99a9f11161a5, type: 3}
+  - {fileID: 7228235204313520905, guid: 7cf6827ffff84c342acfa0b592ff9733, type: 3}
+  - {fileID: 8245893684265450358, guid: ef152d9d83a68c042a078759c6542af3, type: 3}
+  - {fileID: 8762854249364946981, guid: 715a23cd1dcb34d4c90e1c2c90675736, type: 3}
+  - {fileID: 4292117351915903808, guid: f7dfa6122e851404d88cdaa5cf7087f4, type: 3}
+  - {fileID: 6015294664453543812, guid: 0be5bff3d3065fe48b30db55669419a2, type: 3}
   PosLv: -5
   PosRv: 5
-  roadpos: -5
+  roadpos: 0
+  speedObs: 0

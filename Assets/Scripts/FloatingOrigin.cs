@@ -6,6 +6,7 @@ public class FloatingOrigin : MonoBehaviour
 {
     [Header("Cài đặt Reset Tọa Độ")]
     [SerializeField] private float threshold = 3000f;
+    [SerializeField] private TrailRenderer[] trails;
 
     void FixedUpdate()
     {
@@ -36,8 +37,8 @@ public class FloatingOrigin : MonoBehaviour
                 rb.position -= offset;
             }
         }
-        TrailRenderer[] allTrails = FindObjectsByType<TrailRenderer>(FindObjectsInactive.Exclude);
-        foreach (TrailRenderer trail in allTrails)
+
+        foreach (TrailRenderer trail in trails)
         {
             trail.Clear();
         }
