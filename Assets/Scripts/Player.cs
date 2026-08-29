@@ -58,6 +58,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        rb.centerOfMass = new Vector3(0f, -0.5f, 0f);
     }
 
     private void FixedUpdate()
