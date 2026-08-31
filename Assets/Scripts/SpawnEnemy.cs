@@ -17,13 +17,22 @@ public class SpawnEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!Player.instance.IsEndGame())
+
+        if(!StartGame.intance.isS())
         {
-            timer -= Time.deltaTime;
-            if (timer <= 0)
+            return;
+        }
+        else
+        {
+            if (!Player.instance.IsEndGame())
             {
-                RandomSpawn();
-                timer = spawnInterval;
+                timer -= Time.deltaTime;
+                if (timer <= 0)
+                {
+                    RandomSpawn();
+                    timer = spawnInterval;
+                }
+
             }
 
         }

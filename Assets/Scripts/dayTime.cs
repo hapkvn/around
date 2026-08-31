@@ -35,7 +35,9 @@ public class DayTime : MonoBehaviour
 
     void Update()
     {
-        if (sun != null)
+
+      
+        if (sun != null && StartGame.intance.isS())
         {
             // 1. Xoay mặt trời
             sun.transform.Rotate(Vector3.right * rotationSpeed * Time.deltaTime);

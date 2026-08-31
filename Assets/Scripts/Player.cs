@@ -71,8 +71,7 @@ public class Player : MonoBehaviour
         // 2. Lực ép xe xuống đường (Downforce)
         rb.AddForce(-transform.up * downforce * rb.linearVelocity.magnitude);
 
-        // 3. Di chuyển và bẻ lái khi xe còn sống và đang chạm đất
-        if (isCarGrounded && !isCrashed)
+        if (StartGame.intance.isS() && isCarGrounded && !isCrashed)
         {
             Movement();
             Turn();
@@ -206,6 +205,7 @@ public class Player : MonoBehaviour
             isCrashed = true;
             camera_rb.isKinematic = true;
             trail.SetActive(false);
+            StartGame.intance.GameOver();
 
             CinemachineVirtualCamera vcam = FindAnyObjectByType<CinemachineVirtualCamera>();
 
