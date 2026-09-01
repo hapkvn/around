@@ -24,7 +24,7 @@ public class FloatingOrigin : MonoBehaviour
         // 1. Dịch chuyển thế giới (đã cách ly Camera rất chuẩn)
         foreach (GameObject go in rootObjects)
         {
-            if (go.GetComponent<Camera>() != null || go.GetComponent<CinemachineVirtualCamera>() != null)
+            if (go.GetComponent<Camera>() != null || go.GetComponent<CinemachineVirtualCamera>() != null || go.GetComponent<Terrain>() != null)
             {
                 continue;
             }
