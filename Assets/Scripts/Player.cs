@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Cinemachine;
+using System;
+using TMPro;
 using UnityEngine;
-using Cinemachine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Player : MonoBehaviour
 {
@@ -40,10 +42,17 @@ public class Player : MonoBehaviour
     [Header("Cài đặt Camera")]
     [SerializeField] private Rigidbody camera_rb;
 
+    [Header("Cài đặt điếm số ")]
+    [SerializeField] private TMP_Text scoreText;
+    [SerializeField] private TMP_Text EndScoreText;
+
+
     private float currentSpeed;
     private Rigidbody rb;
     private float maxSteerAngle = 30f;
     private float maxX = 20f;
+    private int diem = 0;
+
     public float downforce = 50f;
 
     public static Player instance { get; private set; }
@@ -64,6 +73,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         GetInput();
+        Source();
 
         // 1. Áp dụng hệ thống giảm xóc đệm khí cho 4 bánh
         ApplyHoverSuspension();
@@ -208,6 +218,7 @@ public class Player : MonoBehaviour
             StartGame.intance.GameOver();
 
             CinemachineVirtualCamera vcam = FindAnyObjectByType<CinemachineVirtualCamera>();
+            AudioManger.instance.playCrash();
 
             if (vcam != null)
             {
@@ -215,6 +226,7 @@ public class Player : MonoBehaviour
                 vcam.transform.position = currentPos;
                 vcam.Follow = null;
                 vcam.LookAt = null;
+                EndScoreText.text = Source().ToString();
             }
 
             rb.linearDamping = slideFriction;
@@ -237,4 +249,21 @@ public class Player : MonoBehaviour
     {
         return isCrashed;
     }
+
+    public int Source()
+    {
+        float now = transform.position.z;
+        float last = 0;       
+        
+        if(now>last)
+        {
+            diem++;
+        }
+        int Score = Mathf.FloorToInt(diem / 50f);
+        last = now;
+        scoreText.text = Score.ToString();
+        return Score;
+
+    }
+
 }

@@ -20,7 +20,11 @@ MonoBehaviour:
   right_view:
   - {fileID: 2372751069685738091, guid: e3982b28faf06de4d947ce477cfb1e3a, type: 3}
   obs:
-  - {fileID: 4565928598445822314, guid: 02d0e8c4a9705874d811b12f7649c0de, type: 3}
+  - {fileID: 6983750975623118749, guid: bd13136ad75de914fab7fab064ce42c4, type: 3}
+  - {fileID: 8593513107859112805, guid: 1fd6c4cd1ff2e594e82b50e84e8e8108, type: 3}
+  - {fileID: 8228521707525920886, guid: f156ca8c18131ed4887d0c044f56e5d2, type: 3}
+  - {fileID: 367164113622857375, guid: 411c17f2518b84e47911702c651a5aeb, type: 3}
+  - {fileID: 3497480352656033618, guid: 837d3ecb960ce224b82d8affa3fe5b14, type: 3}
   obsPos:
   - {fileID: 8863939143694026414, guid: 5b9cf4bfc7fc0074faf676e82cc732c2, type: 3}
   - {fileID: 5733227933808637131, guid: ca5cc937759716b44b2f99a9f11161a5, type: 3}

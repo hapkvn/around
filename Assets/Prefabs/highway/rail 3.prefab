@@ -60,6 +60,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: flagCheckers
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 29b2a3b45e247924e88dff163ccf8a25, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 29b2a3b45e247924e88dff163ccf8a25, type: 3}
+      propertyPath: m_TagString
+      value: obstacle
+      objectReference: {fileID: 0}
+    - target: {fileID: 4607668393258877731, guid: 29b2a3b45e247924e88dff163ccf8a25, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -121,6 +133,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 0d7a43dca55511e499f64d5c123610c1, type: 3}
       propertyPath: m_Name
       value: rail 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0d7a43dca55511e499f64d5c123610c1, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0d7a43dca55511e499f64d5c123610c1, type: 3}
       propertyPath: m_TagString
@@ -201,6 +217,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 91de7abf0e110e649b834cfcfb3a43b4, type: 3}
       propertyPath: m_Name
       value: tree (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 91de7abf0e110e649b834cfcfb3a43b4, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 91de7abf0e110e649b834cfcfb3a43b4, type: 3}
+      propertyPath: m_TagString
+      value: obstacle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

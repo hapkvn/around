@@ -21,6 +21,10 @@ public class DayTime : MonoBehaviour
 
     [Header("Cài đặt Đèn xe")]
     public Light carHeadlights;
+
+    [Header("Cài đặt Sương mù")]
+    public Color dayFogColor = new Color(0.6f, 0.7f, 0.8f); // Mặc định: Xám nhạt
+    public Color nightFogColor = new Color(0.05f, 0.05f, 0.1f); // Mặc định: Xanh đen tối
     public bool isNight { get; private set; }
 
     void Awake()
@@ -60,6 +64,13 @@ public class DayTime : MonoBehaviour
 
         // Nội suy độ sáng mượt mà từ Min đến Max
         sun.intensity = Mathf.Lerp(minSunIntensity, maxSunIntensity, sunAngleMultiplier);
+        RenderSettings.fogColor = Color.Lerp(nightFogColor, dayFogColor, sunAngleMultiplier);
+        // Đặt độ sáng môi trường nội suy theo góc mặt trời (sunAngleMultiplier)
+        // Ban ngày sáng (1f), ban đêm tối mờ (0.1f)
+        RenderSettings.ambientIntensity = Mathf.Lerp(0.1f, 1f, sunAngleMultiplier);
+
+        //// Đặt độ phản chiếu giảm đi vào ban đêm
+        //RenderSettings.reflectionIntensity = Mathf.Lerp(0.1f, 1f, sunAngleMultiplier);
     }
 
     private void CheckNightTime()
