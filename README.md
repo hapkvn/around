@@ -21,7 +21,6 @@ https://github.com/user-attachments/assets/1ac2ffa4-7e8c-4350-b965-a568089add43
   <tr>
     <td><img width="837" height="468" alt="Screenshot 2026-10-04 000019" src="https://github.com/user-attachments/assets/5dc76b59-28ed-4d2a-bde1-d19707bbf3b4" /></td>
     <td><img width="1711" height="955" alt="Screenshot 2026-10-04 012852" src="https://github.com/user-attachments/assets/323c9bfb-630d-4515-8260-471636a173de" /></td>
-    <td></td>
   </tr>
 </table>
 
