@@ -3,8 +3,6 @@
 Một tựa game đua xe Endless Runner 3D tốc độ cao được phát triển bằng Unity. Người chơi sẽ điều khiển một chiếc xe vượt qua các chướng ngại vật trên một con đường được tạo ra vô tận, trải nghiệm sự chuyển đổi thời gian mượt mà từ bình minh rực rỡ đến màn đêm tĩnh lặng.
 
 
-https://github.com/user-attachments/assets/1ac2ffa4-7e8c-4350-b965-a568089add43
-
 <table>
   <tr>
     <td><img width="841" height="467" alt="Screenshot 2026-10-03 235956" src="https://github.com/user-attachments/assets/e2e3823e-f60e-43e4-a718-359008a48f66" /></td>
